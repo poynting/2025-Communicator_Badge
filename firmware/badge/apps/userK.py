@@ -111,15 +111,30 @@ class App(BaseApp):
         width = lv.display_get_default().get_horizontal_resolution()
         end_x = width - size - start_x
 
+        # assume: start_x, end_x, circle_obj already defined
+        mid_x  = (start_x + end_x) / 2
+        half_w = (end_x - start_x) / 2
+
+        def move_and_fade_cb(anim, v):
+            # move
+            circle_obj.set_x(v)
+
+            # fade: 0 at ends, 255 at center (linear)
+            dist = abs(v - mid_x)          # distance from center
+            t = 1.0 - (dist / half_w)      # 1 at center, 0 at ends
+            if t < 0: t = 0
+            opa = int(255 * t)             # try t**1.6 for a softer curve
+            circle_obj.set_style_bg_opa(opa, 0)
+
         a = lv.anim_t()
         a.init()
         a.set_var(circle_obj)
         a.set_values(start_x, end_x)
-        a.set_duration(2000)                 # forward: start -> end
-        a.set_reverse_duration(2000)         # backward: end -> start (v9 “reverse”)
+        a.set_duration(2000)
+        a.set_reverse_duration(2000)       # your port uses the “reverse_*” names
         a.set_repeat_count(lv.ANIM_REPEAT_INFINITE)
         a.set_path_cb(lv.anim_t.path_ease_in_out)
-        a.set_custom_exec_cb(lambda anim, v: circle_obj.set_x(v))
+        a.set_custom_exec_cb(move_and_fade_cb)
         a.start()
 
 
