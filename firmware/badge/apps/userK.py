@@ -105,6 +105,8 @@ class App(BaseApp):
         circle_obj.set_style_radius(lv.RADIUS_CIRCLE, 0)
         circle_obj.set_style_bg_color(lv.color_hex(0xFF0000), 0)
 
+
+
         start_x = 10
         circle_obj.set_pos(start_x, 50)
 
@@ -123,8 +125,8 @@ class App(BaseApp):
             dist = abs(v - mid_x)          # distance from center
             t = 1.0 - (dist / half_w)      # 1 at center, 0 at ends
             if t < 0: t = 0
-            opa = int(255 * t)             # try t**1.6 for a softer curve
-            circle_obj.set_style_bg_opa(opa, 0)
+            opa = int(255 * (t))             # try t**1.6 for a softer curve
+            circle_obj.set_style_opa(opa, 0)
 
         a = lv.anim_t()
         a.init()
