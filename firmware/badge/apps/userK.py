@@ -87,25 +87,15 @@ class App(BaseApp):
         p.create_menubar(["Btn F1", "Btn F2", "Btn F3", "Btn F4", "Done"])
         p.replace_screen()
 
-        scr = lv.obj()
-        btn = lv.button(scr)
-        btn.align(lv.ALIGN.CENTER, 0, 0)
-        label = lv.label(btn)
-        label.set_text('Hello World!')
-        lv.screen_load(scr)
-
         # Screen
         scr = lv.obj()
         lv.screen_load(scr)
-
         size = 50
-
+        
         circle_obj = lv.obj(scr)
         circle_obj.set_size(size, size)
         circle_obj.set_style_radius(lv.RADIUS_CIRCLE, 0)
         circle_obj.set_style_bg_color(lv.color_hex(0xFF0000), 0)
-
-
 
         start_x = 10
         circle_obj.set_pos(start_x, 50)
